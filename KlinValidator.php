@@ -33,19 +33,18 @@ class KlinValidator {
 
 	public $validationErrors = '';
 
-	/**
-	 *
-	 * Add validation rule(s) to the given field. This is a chanable method.
-	 *
-	 * Note that a field must be unique in the $this->validations object.
-	 *
-	 * @param string $field Field to be validated
-	 * @param string $displayName The human friendly name for the given field
-	 * @param array $rules Rule(s) to apply to the given field
-	 *
-	 * @return void
-	 */
-	public function addRules($field, $displayName, $rules = []) {
+
+    /**
+     * * Add validation rule(s) to the given field. This is a chanable method.
+     *
+     * Note that a field must be unique in the $this->validations object.
+     *
+     * @param string $field Field to be validated
+     * @param string $displayName The human friendly name for the given field
+     * @param array $rules Rule(s) to apply to the given field
+     * @return $this
+     */
+    public function addRules($field, $displayName, $rules = []) {
 		if (!empty($field) && !empty($rules)) {
 			if (empty($displayName)) {
 				$displayName = $field;
@@ -144,3 +143,5 @@ class KlinValidator {
 		}
 	}
 }
+
+$test = new KlinValidator();
