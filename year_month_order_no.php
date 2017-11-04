@@ -79,30 +79,55 @@ function RandomString($length = 5)
  * get current subdir in the dir search with like%
  * @return array
  */
-function get_sdk_dir() {
+function get_sdk_dir()
+{
     $dirs = array_filter(glob('*'), 'is_dir');
     $filter = preg_quote('sdk', '~'); // don't forget to quote input string!
     $dirs = preg_grep('~' . $filter . '~', $dirs);
     return array_values(array_filter($dirs));
 }
 
-$array1 = ['blue1'  => 'trace', 'red'  => 'trace', 'green1'  => 'trace', 'purple' => 'default'];
-$array2 = ['green' => 'trace', 'blue' => 'trace', 'yellow' => 'trace', 'cyan'   => 'trace'];
+$array1 = ['blue1' => 'trace', 'red' => 'trace', 'green1' => 'trace', 'purple' => 'default'];
+$array2 = ['green' => 'trace', 'blue' => 'trace', 'yellow' => 'trace', 'cyan' => 'trace'];
 
 $array3 = ['log' => [
     //主目录名
     'logs' => [
-        'default' => 'debugs',//默认存到 debugs 文件夹
-        'error_msg' => 'errors',//左边指令，右边存入目录 //'sdk_info' => 'infos',
+        'default' => 'debugs', //默认存到 debugs 文件夹
+        'error_msg' => 'errors', //左边指令，右边存入目录 //'sdk_info' => 'infos',
     ],
 ]];
 //var_dump($array3['log']);die();
 $log_gruop_names = [
-    'default' => 'debugs',//默认存到 debugs 文件夹
-    'error_msg' => 'errors',//左边指令，右边存入目录 //'sdk_info' => 'infos',
+    'default' => 'debugs', //默认存到 debugs 文件夹
+    'error_msg' => 'errors', //左边指令，右边存入目录 //'sdk_info' => 'infos',
 ];
-var_dump($array3['log']['logs']);
+/*var_dump($array3['log']['logs']);
 var_dump($log_gruop_names);die();
 var_dump(key(array_intersect_key($array1, $array2)));
-echo array_search("default",$array1);
+echo array_search("default",$array1);*/
+
+//echo generateSerialNumber();
+//$data = array('version' =>'1.01');
+//$data = http_build_query($data);
+//echo $data;
+/*$extra = 'version=1.01';
+parse_str($extra, $output);
+$r = print_var_name($output['version']);
+
+function print_var_name($var) {
+foreach($GLOBALS as $var_name => $value) {
+if ($value === $var) {
+return $var_name;
+}
+}
+
+return false;
+}
+var_dump($r);
+var_dump($output);*/
+
+//["education"]=> array(3) {
+// [0]=> string(1) "1" [1]=> string(1) "2" [2]=> string(1) "3"
+// }
 //echo getDepositOrderNum('banks');
