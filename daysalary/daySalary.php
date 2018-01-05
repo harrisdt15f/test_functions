@@ -5,7 +5,7 @@ include_once(__DIR__ . DIRECTORY_SEPARATOR . 'Logs.php');
 
 Class Data
 {
-    public $back_money15, $back_money540, $back_money4080;
+    public $back_money15=0, $back_money540=0, $back_money4080=0;
 }
 
 Class Agent
@@ -53,9 +53,9 @@ $fuzhiRule = '[{"id":32,"min_bets":1400000,"max_bets":1500000,"active_user_num":
 $aFuzhi = json_decode($fuzhiRule);
 $is_limit_active = 1;
 $data = new Data();
-$data->back_money15 = 0;
-$data->back_money540 = 0;
-$data->back_money4080 = 0;
+//$data->back_money15 = 0;
+//$data->back_money540 = 0;
+//$data->back_money4080 = 0;
 $oUserAgent = new Agent($is_limit_active);
 
 $iMaxPrize15 = 500;
@@ -78,10 +78,16 @@ $iCount = count($aFuzhi);
 $iMinBets = 1000;
 for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
     for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
+        $current_min = 0;
+        $current_max = 0;
 //for ($iActiveUserNum = 0; $iActiveUserNum <= 5; $iActiveUserNum++) {
 //    for ($iTeamBets = 13174; $iTeamBets <= 15000; $iTeamBets++) {
         foreach ($aFuzhi as $iFuZhiKey => $oFuZhiRule) {
+            $current_min = $oFuZhiRule->min_bets;
+            $current_max = $oFuZhiRule->max_bets;
             if ($iTeamBets < $iMinBets) {
+                $current_min = '无限';
+                $current_max = $iMinBets;
                 //first
                 $log = [];
                 $log['condition'] = '扶植期内　bet less than 1000';
@@ -90,6 +96,8 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
             }
             if ($iTeamBets >= $iMinBets && $iTeamBets < 10000 && ((!$oUserAgent->is_limit_active) || ($oUserAgent->is_limit_active && $iActiveUserNum >= 3))) {
 //second
+                $current_min = $iMinBets;
+                $current_max = 10000;
                 $log = [];
                 $log['iUnit'] = $iUnit = floor($iTeamBets / 1000);
                 $log['iBackMoney 0~5万段最高返奖1.0%'] = $iBackMoney = $iUnit * 10;
@@ -97,9 +105,12 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                 $log['condition'] = '扶植期内　second : 1000《=　bet(' . $iTeamBets . ')《 10000';
                 $log['iActiveUserNum'] = isset($iActiveUserNum) ? $iActiveUserNum : '';
                 log_args_write($log);
+                dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                 break;
             }
             if ($iTeamBets >= $aFuzhi[$iCount - 1]->min_bets && $iTeamBets <= $aFuzhi[$iCount - 1]->max_bets) {
+                $current_min = $aFuzhi[$iCount - 1]->min_bets;
+                $current_max = $aFuzhi[$iCount - 1]->max_bets;
 //third
                 $log = [];
                 $log['condition'] = '扶植期内　third : ' . $aFuzhi[$iCount - 1]->min_bets . '《=　bet(' . $iTeamBets . ')《 ' . $aFuzhi[$iCount - 1]->max_bets;
@@ -118,11 +129,14 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                     $log['iBackMoney'] = '(iWBackMoney + $iQBackMoney) 0~5万段最高返奖1.0% = ' . $iBackMoney;
                     log_args_write($log);
                     $data->back_money15 = $iBackMoney;
+                    dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '三');
                     break;
                 }
             }
             if ($iTeamBets > $aFuzhi[0]->max_bets && ((!$oUserAgent->is_limit_active) || ($oUserAgent->is_limit_active && $iActiveUserNum >= $aFuzhi[0]->active_user_num))) {
 //fourth
+                $current_min = $aFuzhi[0]->max_bets;
+                $current_max = '无限';
                 $log = [];
                 $log['condition'] = '扶植期内　fourth : 最小扶植:' . $iTeamBets . '>' . $aFuzhi[0]->max_bets;
                 $log['需限制活跃人数'] = $oUserAgent->is_limit_active ? '是:' . $iActiveUserNum >= $aFuzhi[$iCount - 1]->active_user_num : '无';
@@ -134,10 +148,14 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                 $log['50~150万段最高返奖1.2%'] = $temporary4080 . ' = iMaxPrize140150 ' . $iMaxPrize140150 . ' - iMaxPrize4050 ' . $iMaxPrize4050;
                 log_args_write($log);
                 $data->back_money4080 = $temporary4080;
+                dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '四');
                 break;
             }
             if ($iTeamBets > $oFuZhiRule->min_bets && $iTeamBets <= $oFuZhiRule->max_bets) {
                 if ((!$oUserAgent->is_limit_active) || ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num)) {
+                    $current_min = $oFuZhiRule->min_bets;
+                    $current_max = $oFuZhiRule->max_bets;
+                    $trace_state = '五';
                     $log = [];
                     $log['condition'] = '扶植期内　five :' . $oFuZhiRule->min_bets . '<' . $iTeamBets . '<=' . $oFuZhiRule->max_bets;
 //                            $iUnitNumW = floor($iTeamBets / 10000);
@@ -156,6 +174,7 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iBackMoney;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '50-60':
                         case '60-70':
@@ -175,6 +194,7 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                             $iBackMoney = $iUnitNumW * $oFuZhiRule->back_money; //万的
                             $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iBackMoney;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                     }
                 }
@@ -182,6 +202,9 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
             if ($iTeamBets > $oFuZhiRule->min_bets) {
                 //six
                 if ((!$oUserAgent->is_limit_active) || ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num)) {
+                    $current_min = $oFuZhiRule->min_bets;
+                    $current_max = '无限';
+                    $trace_state = '六';
                     $log = [];
                     $log['condition'] = '扶植期内　six :' . $iTeamBets . '>' . $oFuZhiRule->min_bets;
                     $log['flag'] = $oFuZhiRule->flag;
@@ -189,103 +212,118 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                         case '1-5':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '5-10':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize510 - $iMaxPrize15;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '10-20':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize1020 - $iMaxPrize15;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '20-30':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize2030 - $iMaxPrize15;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '30-40':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize3040 - $iMaxPrize15;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '40-50':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '50-60':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
                             $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize5060 - $iMaxPrize4050;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '60-70':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
                             $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize6070 - $iMaxPrize4050;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '70-80':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
                             $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize7080 - $iMaxPrize4050;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '80-90':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
                             $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize8090 - $iMaxPrize4050;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '90-100':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
                             $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize90100 - $iMaxPrize4050;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '100-110':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
                             $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize100110 - $iMaxPrize4050;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '110-120':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
                             $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize110120 - $iMaxPrize4050;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '120-130':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
                             $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize120130 - $iMaxPrize4050;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                         case '130-140':
                             $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
                             $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
                             $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize130140 - $iMaxPrize4050;
                             log_args_write($log);
+                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
                             break 2;
                     }
                 }
             }
-
         }
-        dd($data, $oUserAgent, $oFuZhiRule, $iActiveUserNum, $iTeamBets);
         echo '已完成任务。。。》最终有效金额＝' . $iTeamBets . '与人数量＝' . $iActiveUserNum . '|[0~5万段最高返奖1.0%]=>' . $data->back_money15 . '[5~50万段最高返奖1.0%]＝》' . $data->back_money540 . '[50~150万段最高返奖1.2%]＝》' . $data->back_money4080 . "\n";
     }
 }
 echo 'finished';
-function dd(Data $d, $oUserAgent, $oFuZhiRule, $activeUser, $iTeamBets)
+function dd(Data $d, Agent $oUserAgent, $current_min, $current_max, $activeUser, $iTeamBets, $condition)
 {
     $log = '';
-    $log .= '|条件　＝》投注量' . $oFuZhiRule->min_bets . '与' . $oFuZhiRule->max_bets . '之间';
     $log .= '|目前活跃人数　＝' . $activeUser;
-    $log .= '|需限制活跃人数　＝' . $islimit = empty($oUserAgent->is_limit_active) ? '否' : '是';
     $log .= '|目前金额　＝》' . $iTeamBets . '|[0~5万段最高返奖1.0%]=>' . $d->back_money15 . '[5~50万段最高返奖1.0%]＝》' . $d->back_money540 . '[50~150万段最高返奖1.2%]＝》' . $d->back_money4080;
+    $log .= '|得到工资　＝》' . ((int)$d->back_money15 + (int)$d->back_money540 + (int)$d->back_money4080);
+    $log .= '￥|条件　＝》投注量' . $current_min . '与' . $current_max . '之间';
+    $log .= '|需限制活跃人数　＝' . $islimit = empty($oUserAgent->is_limit_active) ? '否' : '是';
+    $log .= '|目前进入状态《' . $condition . '》';
     $flc_path = __DIR__ . '/logs';
     $log_obj = new Logs($flc_path, 'dailyWage');
     $log_obj->setLog($log);
@@ -405,7 +443,7 @@ function customLog($log, $name, $flc_path = '')
 {
     if (empty($flc_path)) $flc_path = __DIR__ . '/logs';
     $log_obj = new Logs($flc_path, $name);
-    $log_obj->setLog("\n".$log);
+    $log_obj->setLog("\n" . $log);
 }
 
 /**
