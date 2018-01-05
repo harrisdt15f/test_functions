@@ -1,7 +1,8 @@
 <?php
 
 date_default_timezone_set('Asia/Shanghai');
-include_once (__DIR__.DIRECTORY_SEPARATOR.'Logs.php');
+include_once(__DIR__ . DIRECTORY_SEPARATOR . 'Logs.php');
+
 Class Data
 {
     public $back_money15, $back_money540, $back_money4080;
@@ -44,8 +45,9 @@ Class Salary
         $this->back_money = $back_money;
     }
 }
+
 $maximum_active_user = 130;
-$maximum_amount_bet =1500000;
+$maximum_amount_bet = 1500000;
 
 $fuzhiRule = '[{"id":32,"min_bets":1400000,"max_bets":1500000,"active_user_num":130,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"140-150"},{"id":31,"min_bets":1300000,"max_bets":1400000,"active_user_num":120,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"130-140"},{"id":30,"min_bets":1200000,"max_bets":1300000,"active_user_num":110,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"120-130"},{"id":29,"min_bets":1100000,"max_bets":1200000,"active_user_num":100,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"110-120"},{"id":28,"min_bets":1000000,"max_bets":1100000,"active_user_num":90,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"100-110"},{"id":27,"min_bets":900000,"max_bets":1000000,"active_user_num":80,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"90-100"},{"id":26,"min_bets":800000,"max_bets":900000,"active_user_num":70,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"80-90"},{"id":25,"min_bets":700000,"max_bets":800000,"active_user_num":60,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"70-80"},{"id":24,"min_bets":600000,"max_bets":700000,"active_user_num":50,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"60-70"},{"id":23,"min_bets":500000,"max_bets":600000,"active_user_num":40,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"50-60"},{"id":22,"min_bets":400000,"max_bets":500000,"active_user_num":30,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"40-50"},{"id":21,"min_bets":300000,"max_bets":400000,"active_user_num":25,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"30-40"},{"id":20,"min_bets":200000,"max_bets":300000,"active_user_num":20,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"20-30"},{"id":19,"min_bets":100000,"max_bets":200000,"active_user_num":15,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"10-20"},{"id":18,"min_bets":50000,"max_bets":100000,"active_user_num":6,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"5-10"},{"id":17,"min_bets":10000,"max_bets":50000,"active_user_num":3,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"1-5"}]';
 $aFuzhi = json_decode($fuzhiRule);
@@ -75,10 +77,10 @@ $iMaxPrize130140 = 15800;
 $iMaxPrize140150 = 17000;
 $iCount = count($aFuzhi);
 $iMinBets = 1000;
-//for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
-//    for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
-for ($iActiveUserNum = 0; $i <= 5; $i++) {
-    for ($iTeamBets = 138083; $i <= 138085; $i++) {
+for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
+    for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
+//for ($iActiveUserNum = 0; $iActiveUserNum <= 5; $iActiveUserNum++) {
+//    for ($iTeamBets = 13174; $iTeamBets <= 15000; $iTeamBets++) {
         foreach ($aFuzhi as $iFuZhiKey => $oFuZhiRule) {
             if ($iTeamBets < $iMinBets) {
                 //first
@@ -271,34 +273,20 @@ for ($iActiveUserNum = 0; $i <= 5; $i++) {
                     }
                 }
             }
+
         }
-        dd($data, $oUserAgent, $oFuZhiRule, $oUserAgent->is_limit_active, $iTeamBets);
-        echo '已完成任务。。。》最终有效金额＝'.$iTeamBets.'与人数量＝'.$iActiveUserNum."\n";
+        dd($data, $oUserAgent, $oFuZhiRule, $iActiveUserNum, $iTeamBets);
+        echo '已完成任务。。。》最终有效金额＝' . $iTeamBets . '与人数量＝' . $iActiveUserNum . '|[0~5万段最高返奖1.0%]=>' . $data->back_money15 . '[5~50万段最高返奖1.0%]＝》' . $data->back_money540 . '[50~150万段最高返奖1.2%]＝》' . $data->back_money4080 . "\n";
     }
 }
 echo 'finished';
-function dd($data, $oUserAgent, $oFuZhiRule, $activeUser, $iTeamBets)
+function dd(Data $d, $oUserAgent, $oFuZhiRule, $activeUser, $iTeamBets)
 {
-  /* {
-         "back_money15": 500,
-     "back_money540": 4500,
-     "back_money4080": 10800
- }{
-     "is_limit_active": 1
- }{
-     "min_bets": 1300000,
-     "max_bets": 1400000,
-     "active_user_num": 120,
-     "flag": "130-140",
-     "back_money": "120"
- }*/
     $log = '';
-    $log .= '条件　＝》投注量' . $oFuZhiRule->min_bets . '与' . $oFuZhiRule->max_bets . '之间';
-    $log .= '活跃人数　＝' . $activeUser;
-    $log .= '需限制活跃人数　＝' . $islimit = empty($oUserAgent->is_limit_active) ? '否' : '是';
-    $log .= '目前金额　＝》' . $iTeamBets . '|[0~5万段最高返奖1.0%]=>' . $data->back_money15 . '[5~50万段最高返奖1.0%]＝》' . $data->back_money540 . '[50~150万段最高返奖1.2%]＝》' . $data->back_money4080;
-    $log .="\r\n";
-//    file_put_contents("dailyWage.log", date("Y-m-d H:i:s") . $log . "\r\n", FILE_APPEND);
+    $log .= '|条件　＝》投注量' . $oFuZhiRule->min_bets . '与' . $oFuZhiRule->max_bets . '之间';
+    $log .= '|目前活跃人数　＝' . $activeUser;
+    $log .= '|需限制活跃人数　＝' . $islimit = empty($oUserAgent->is_limit_active) ? '否' : '是';
+    $log .= '|目前金额　＝》' . $iTeamBets . '|[0~5万段最高返奖1.0%]=>' . $d->back_money15 . '[5~50万段最高返奖1.0%]＝》' . $d->back_money540 . '[50~150万段最高返奖1.2%]＝》' . $d->back_money4080;
     $flc_path = __DIR__ . '/logs';
     $log_obj = new Logs($flc_path, 'dailyWage');
     $log_obj->setLog($log);
@@ -416,15 +404,9 @@ function han_log($arr = [], $name = '', $flc_path = '')
  */
 function customLog($log, $name, $flc_path = '')
 {
-    /*if (empty($flc_path)) $flc_path = __DIR__ . '/logs';
-    $log = "[" . date('Y-m-d H:i:s', time()) . "]" . "\r\n{$log}####################################################################\r\n";
-    $log_path = $flc_path . '/' . $name . '.log';
-    file_put_contents($log_path, $log, FILE_APPEND);
-    return true;*/
-
     if (empty($flc_path)) $flc_path = __DIR__ . '/logs';
     $log_obj = new Logs($flc_path, $name);
-    $log_obj->setLog($log);
+    $log_obj->setLog("\n".$log);
 }
 
 /**
