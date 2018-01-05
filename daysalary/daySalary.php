@@ -1,6 +1,7 @@
 <?php
-date_default_timezone_set('Asia/Shanghai');
 
+date_default_timezone_set('Asia/Shanghai');
+include_once (__DIR__.DIRECTORY_SEPARATOR.'Logs.php');
 Class Data
 {
     public $back_money15, $back_money540, $back_money4080;
@@ -74,10 +75,10 @@ $iMaxPrize130140 = 15800;
 $iMaxPrize140150 = 17000;
 $iCount = count($aFuzhi);
 $iMinBets = 1000;
-//for ($iActiveUserNum = 0; $i <= 130; $i++) {
-//for ($iTeamBets = 0; $i <= 1500000; $i++) {
-for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
-    for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
+//for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
+//    for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
+for ($iActiveUserNum = 0; $i <= 5; $i++) {
+    for ($iTeamBets = 138083; $i <= 138085; $i++) {
         foreach ($aFuzhi as $iFuZhiKey => $oFuZhiRule) {
             if ($iTeamBets < $iMinBets) {
                 //first
@@ -296,9 +297,11 @@ function dd($data, $oUserAgent, $oFuZhiRule, $activeUser, $iTeamBets)
     $log .= '活跃人数　＝' . $activeUser;
     $log .= '需限制活跃人数　＝' . $islimit = empty($oUserAgent->is_limit_active) ? '否' : '是';
     $log .= '目前金额　＝》' . $iTeamBets . '|[0~5万段最高返奖1.0%]=>' . $data->back_money15 . '[5~50万段最高返奖1.0%]＝》' . $data->back_money540 . '[50~150万段最高返奖1.2%]＝》' . $data->back_money4080;
-    file_put_contents("dailyWage.log", date("Y-m-d H:i:s") . $log . "\r\n", FILE_APPEND);
-//    var_dump($data,$oFuZhiRule,$oUserAgent);
-//    echo '<pre>' . print_r($var, 1) . '</pre>';
+    $log .="\r\n";
+//    file_put_contents("dailyWage.log", date("Y-m-d H:i:s") . $log . "\r\n", FILE_APPEND);
+    $flc_path = __DIR__ . '/logs';
+    $log_obj = new Logs($flc_path, 'dailyWage');
+    $log_obj->setLog($log);
 }
 
 //#################################################
@@ -413,11 +416,15 @@ function han_log($arr = [], $name = '', $flc_path = '')
  */
 function customLog($log, $name, $flc_path = '')
 {
-    if (empty($flc_path)) $flc_path = __DIR__ . '/logs';
+    /*if (empty($flc_path)) $flc_path = __DIR__ . '/logs';
     $log = "[" . date('Y-m-d H:i:s', time()) . "]" . "\r\n{$log}####################################################################\r\n";
     $log_path = $flc_path . '/' . $name . '.log';
     file_put_contents($log_path, $log, FILE_APPEND);
-    return true;
+    return true;*/
+
+    if (empty($flc_path)) $flc_path = __DIR__ . '/logs';
+    $log_obj = new Logs($flc_path, $name);
+    $log_obj->setLog($log);
 }
 
 /**
