@@ -57,7 +57,6 @@ $data->back_money15 = 0;
 $data->back_money540 = 0;
 $data->back_money4080 = 0;
 $oUserAgent = new Agent($is_limit_active);
-//$oFuZhiRule = new Salary($min_bets, $max_bets, $active_user_num, $flag, $back_money);
 
 $iMaxPrize15 = 500;
 $iMaxPrize510 = 1000;
@@ -104,7 +103,7 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
 //third
                 $log = [];
                 $log['condition'] = '扶植期内　third : ' . $aFuzhi[$iCount - 1]->min_bets . '《=　bet(' . $iTeamBets . ')《 ' . $aFuzhi[$iCount - 1]->max_bets;
-                $log['iCount'] = 'iCount is ' . $iCount . ' and fuzhi key is ' . $iCount - 1;
+                $log['iCount'] = 'iCount is ' . $iCount . ' and fuzhi key is ' . ((int)$iCount - 1);
                 if ((!$oUserAgent->is_limit_active) || ($oUserAgent->is_limit_active && $iActiveUserNum >= $aFuzhi[$iCount - 1]->active_user_num)) {
                     $log['需限制活跃人数'] = $oUserAgent->is_limit_active ? '是:' . $iActiveUserNum >= $aFuzhi[$iCount - 1]->active_user_num : '无';
                     $log['iUnitNum　算法'] = $iTeamBets . '/' . $aFuzhi[$iCount - 1]->unit;
