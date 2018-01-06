@@ -51,11 +51,8 @@ $maximum_amount_bet = 1500000;
 
 $fuzhiRule = '[{"id":16,"min_bets":1400000,"max_bets":1500000,"active_user_num":130,"unit":10000,"back_money":120,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"140-150"},{"id":15,"min_bets":1300000,"max_bets":1400000,"active_user_num":120,"unit":10000,"back_money":120,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"130-140"},{"id":14,"min_bets":1200000,"max_bets":1300000,"active_user_num":110,"unit":10000,"back_money":120,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"120-130"},{"id":13,"min_bets":1100000,"max_bets":1200000,"active_user_num":100,"unit":10000,"back_money":120,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"110-120"},{"id":12,"min_bets":1000000,"max_bets":1100000,"active_user_num":90,"unit":10000,"back_money":120,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"100-110"},{"id":11,"min_bets":900000,"max_bets":1000000,"active_user_num":80,"unit":10000,"back_money":120,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"90-100"},{"id":10,"min_bets":800000,"max_bets":900000,"active_user_num":70,"unit":10000,"back_money":120,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"80-90"},{"id":9,"min_bets":700000,"max_bets":800000,"active_user_num":60,"unit":10000,"back_money":120,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"70-80"},{"id":8,"min_bets":600000,"max_bets":700000,"active_user_num":50,"unit":10000,"back_money":120,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"60-70"},{"id":7,"min_bets":500000,"max_bets":600000,"active_user_num":40,"unit":10000,"back_money":120,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"50-60"},{"id":6,"min_bets":400000,"max_bets":500000,"active_user_num":30,"unit":10000,"back_money":100,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"40-50"},{"id":5,"min_bets":300000,"max_bets":400000,"active_user_num":25,"unit":10000,"back_money":100,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"30-40"},{"id":4,"min_bets":200000,"max_bets":300000,"active_user_num":20,"unit":10000,"back_money":100,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"20-30"},{"id":3,"min_bets":100000,"max_bets":200000,"active_user_num":15,"unit":10000,"back_money":100,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"10-20"},{"id":2,"min_bets":50000,"max_bets":100000,"active_user_num":6,"unit":10000,"back_money":100,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"5-10"},{"id":1,"min_bets":10000,"max_bets":50000,"active_user_num":3,"unit":10000,"back_money":100,"is_fuzhi":0,"created_at":null,"updated_at":null,"flag":"1-5"}]';
 $aNotFuzhi = json_decode($fuzhiRule);
-$is_limit_active = 1;
+$is_limit_active = 0;
 $data = new Data();
-//$data->back_money15 = 0;
-//$data->back_money540 = 0;
-//$data->back_money4080 = 0;
 $oUserAgent = new Agent($is_limit_active);
 
 $iMaxPrize15 = 500;
@@ -74,14 +71,16 @@ $iMaxPrize110120 = 13400;
 $iMaxPrize120130 = 14600;
 $iMaxPrize130140 = 15800;
 $iMaxPrize140150 = 17000;
-$iCount = count($aFuzhi);
+$iCount = count($aNotFuzhi);
 $iMinBets = 1000;
 for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
     for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
         $current_min = 0;
         $current_max = 0;
-//for ($iActiveUserNum = 0; $iActiveUserNum <= 5; $iActiveUserNum++) {
-//    for ($iTeamBets = 13174; $iTeamBets <= 15000; $iTeamBets++) {
+//for ($iActiveUserNum = 5; $iActiveUserNum <= 6; $iActiveUserNum++) {
+//    for ($iTeamBets = 262150; $iTeamBets <= 264147; $iTeamBets++) {
+//        $current_min = 0;
+//        $current_max = 0;
         foreach ($aNotFuzhi as $iNotFuKey => $oNotFuZhiRule) {
             if ($iTeamBets < $aNotFuzhi[$iCount - 1]->min_bets) {
                 $current_min = '无限';
