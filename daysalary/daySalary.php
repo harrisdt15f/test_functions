@@ -5,7 +5,7 @@ include_once(__DIR__ . DIRECTORY_SEPARATOR . 'Logs.php');
 
 Class Data
 {
-    public $back_money15=0, $back_money540=0, $back_money4080=0;
+    public $back_money01 = 0, $back_money15 = 0, $back_money550 = 0, $back_money50150 = 0, $back_money150250 = 0;
 }
 
 Class Agent
@@ -46,16 +46,17 @@ Class Salary
     }
 }
 
-$maximum_active_user = 130;
-$maximum_amount_bet = 1500000;
+$maximum_active_user = 50;
+$maximum_amount_bet = 2500000;
 
-$fuzhiRule = '[{"id":32,"min_bets":1400000,"max_bets":1500000,"active_user_num":130,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"140-150"},{"id":31,"min_bets":1300000,"max_bets":1400000,"active_user_num":120,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"130-140"},{"id":30,"min_bets":1200000,"max_bets":1300000,"active_user_num":110,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"120-130"},{"id":29,"min_bets":1100000,"max_bets":1200000,"active_user_num":100,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"110-120"},{"id":28,"min_bets":1000000,"max_bets":1100000,"active_user_num":90,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"100-110"},{"id":27,"min_bets":900000,"max_bets":1000000,"active_user_num":80,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"90-100"},{"id":26,"min_bets":800000,"max_bets":900000,"active_user_num":70,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"80-90"},{"id":25,"min_bets":700000,"max_bets":800000,"active_user_num":60,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"70-80"},{"id":24,"min_bets":600000,"max_bets":700000,"active_user_num":50,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"60-70"},{"id":23,"min_bets":500000,"max_bets":600000,"active_user_num":40,"unit":10000,"back_money":120,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"50-60"},{"id":22,"min_bets":400000,"max_bets":500000,"active_user_num":30,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"40-50"},{"id":21,"min_bets":300000,"max_bets":400000,"active_user_num":25,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"30-40"},{"id":20,"min_bets":200000,"max_bets":300000,"active_user_num":20,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"20-30"},{"id":19,"min_bets":100000,"max_bets":200000,"active_user_num":15,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"10-20"},{"id":18,"min_bets":50000,"max_bets":100000,"active_user_num":6,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"5-10"},{"id":17,"min_bets":10000,"max_bets":50000,"active_user_num":3,"unit":10000,"back_money":100,"is_fuzhi":1,"created_at":null,"updated_at":null,"flag":"1-5"}]';
-$aFuzhi = json_decode($fuzhiRule);
+$fuzhiRule = '[{"id":1,"min_bets":10000,"max_bets":50000,"active_user_num":0,"nactive_user_num":0,"unit":1000,"back_money":10,"nback_money":10,"flag":"1-5","decrease_flag":null,"max_price":500,"created_at":null,"updated_at":null},{"id":2,"min_bets":50000,"max_bets":100000,"active_user_num":3,"nactive_user_num":3,"unit":10000,"back_money":100,"nback_money":100,"flag":"5-10","decrease_flag":"1-5","max_price":1000,"created_at":null,"updated_at":null},{"id":3,"min_bets":100000,"max_bets":200000,"active_user_num":6,"nactive_user_num":6,"unit":10000,"back_money":100,"nback_money":100,"flag":"10-20","decrease_flag":"5-10","max_price":2000,"created_at":null,"updated_at":null},{"id":4,"min_bets":200000,"max_bets":300000,"active_user_num":10,"nactive_user_num":10,"unit":10000,"back_money":100,"nback_money":100,"flag":"20-30","decrease_flag":"10-20","max_price":3000,"created_at":null,"updated_at":null},{"id":5,"min_bets":300000,"max_bets":400000,"active_user_num":15,"nactive_user_num":15,"unit":10000,"back_money":100,"nback_money":100,"flag":"30-40","decrease_flag":"20-30","max_price":4000,"created_at":null,"updated_at":null},{"id":6,"min_bets":400000,"max_bets":500000,"active_user_num":20,"nactive_user_num":20,"unit":10000,"back_money":100,"nback_money":100,"flag":"40-50","decrease_flag":"30-40","max_price":5000,"created_at":null,"updated_at":null},{"id":7,"min_bets":500000,"max_bets":600000,"active_user_num":25,"nactive_user_num":25,"unit":10000,"back_money":120,"nback_money":120,"flag":"50-60","decrease_flag":"40-50","max_price":6200,"created_at":null,"updated_at":null},{"id":8,"min_bets":600000,"max_bets":700000,"active_user_num":30,"nactive_user_num":30,"unit":10000,"back_money":120,"nback_money":120,"flag":"60-70","decrease_flag":"50-60","max_price":7400,"created_at":null,"updated_at":null},{"id":9,"min_bets":700000,"max_bets":800000,"active_user_num":35,"nactive_user_num":35,"unit":10000,"back_money":120,"nback_money":120,"flag":"70-80","decrease_flag":"60-70","max_price":8600,"created_at":null,"updated_at":null},{"id":10,"min_bets":800000,"max_bets":1500000,"active_user_num":40,"nactive_user_num":40,"unit":10000,"back_money":120,"nback_money":120,"flag":"80-150","decrease_flag":"70-80","max_price":17000,"created_at":null,"updated_at":null},{"id":11,"min_bets":1500000,"max_bets":2500000,"active_user_num":50,"nactive_user_num":50,"unit":10000,"back_money":130,"nback_money":130,"flag":"150-250","decrease_flag":"80-150","max_price":30000,"created_at":null,"updated_at":null}]';
+$aFuzhi_raw = json_decode($fuzhiRule);
+$aFuzhi = [];
+foreach ($aFuzhi_raw as $key => $value) {
+    $aFuzhi[$value->flag] = $value;
+}
 $is_limit_active = 1;
 $data = new Data();
-//$data->back_money15 = 0;
-//$data->back_money540 = 0;
-//$data->back_money4080 = 0;
 $oUserAgent = new Agent($is_limit_active);
 
 $iMaxPrize15 = 500;
@@ -67,260 +68,469 @@ $iMaxPrize4050 = 5000;
 $iMaxPrize5060 = 6200;
 $iMaxPrize6070 = 7400;
 $iMaxPrize7080 = 8600;
-$iMaxPrize8090 = 9800;
-$iMaxPrize90100 = 11000;
-$iMaxPrize100110 = 12200;
-$iMaxPrize110120 = 13400;
-$iMaxPrize120130 = 14600;
-$iMaxPrize130140 = 15800;
-$iMaxPrize140150 = 17000;
+$iMaxPrize80150 = 17000;
+$iMaxPrize150250 = 30000;
+//$iMaxPrize8090 = 9800;
+//$iMaxPrize90100 = 11000;
+//$iMaxPrize100110 = 12200;
+//$iMaxPrize110120 = 13400;
+//$iMaxPrize120130 = 14600;
+//$iMaxPrize130140 = 15800;
+//$iMaxPrize140150 = 17000;
+
 $iCount = count($aFuzhi);
 $iMinBets = 1000;
 for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
     for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
         $current_min = 0;
         $current_max = 0;
-//for ($iActiveUserNum = 0; $iActiveUserNum <= 5; $iActiveUserNum++) {
-//    for ($iTeamBets = 13174; $iTeamBets <= 15000; $iTeamBets++) {
+//for ($iActiveUserNum = 50; $iActiveUserNum <= 50; $iActiveUserNum++) {
+//    for ($iTeamBets = 2499999; $iTeamBets <= 2500000; $iTeamBets++) {
+//        $current_min = 0;
+//        $current_max = 0;
         foreach ($aFuzhi as $iFuZhiKey => $oFuZhiRule) {
             $current_min = $oFuZhiRule->min_bets;
             $current_max = $oFuZhiRule->max_bets;
-            if ($iTeamBets < $iMinBets) {
-                $current_min = '无限';
-                $current_max = $iMinBets;
-                //first
+            if ($iTeamBets <= 10000) {
+//first
                 $log = [];
-                $log['condition'] = '扶植期内　bet less than 1000';
-                log_args_write($log);
-                break;
-            }
-            if ($iTeamBets >= $iMinBets && $iTeamBets < 10000 && ((!$oUserAgent->is_limit_active) || ($oUserAgent->is_limit_active && $iActiveUserNum >= 3))) {
-//second
-                $current_min = $iMinBets;
-                $current_max = 10000;
-                $log = [];
-                $log['iUnit'] = $iUnit = floor($iTeamBets / 1000);
-                $log['iBackMoney 0~5万段最高返奖1.0%'] = $iBackMoney = $iUnit * 10;
-                $data->back_money15 = $iBackMoney;
-                $log['condition'] = '扶植期内　second : 1000《=　bet(' . $iTeamBets . ')《 10000';
-                $log['iActiveUserNum'] = isset($iActiveUserNum) ? $iActiveUserNum : '';
+                $log['iBackMoney 0~1万段最高返奖1.0%'] = $iBackMoney = $iTeamBets * 0.01;
+                $data->back_money01 = $iBackMoney;
+                $log['condition'] = '扶植期内　first : bet(' . $iTeamBets . ')《 10000';
                 log_args_write($log);
                 dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                 break;
             }
-            if ($iTeamBets >= $aFuzhi[$iCount - 1]->min_bets && $iTeamBets <= $aFuzhi[$iCount - 1]->max_bets) {
-                $current_min = $aFuzhi[$iCount - 1]->min_bets;
-                $current_max = $aFuzhi[$iCount - 1]->max_bets;
-//third
-                $log = [];
-                $log['condition'] = '扶植期内　third : ' . $aFuzhi[$iCount - 1]->min_bets . '《=　bet(' . $iTeamBets . ')《 ' . $aFuzhi[$iCount - 1]->max_bets;
-                $log['iCount'] = 'iCount is ' . $iCount . ' and fuzhi key is ' . ((int)$iCount - 1);
-                if ((!$oUserAgent->is_limit_active) || ($oUserAgent->is_limit_active && $iActiveUserNum >= $aFuzhi[$iCount - 1]->active_user_num)) {
-                    $log['需限制活跃人数'] = $oUserAgent->is_limit_active ? '是:' . $iActiveUserNum >= $aFuzhi[$iCount - 1]->active_user_num : '无';
-                    $log['iUnitNum　算法'] = $iTeamBets . '/' . $aFuzhi[$iCount - 1]->unit;
-                    $log['iUnitNum　结果'] = $iUnitNum = $iTeamBets / $aFuzhi[$iCount - 1]->unit;
-                    $log['iUnitNumW floor value'] = $iUnitNumW = floor($iTeamBets / $aFuzhi[$iCount - 1]->unit);
-                    $log['iWBackMoney 算法'] = $iUnitNumW . '*' . $aFuzhi[$iCount - 1]->back_money;
-                    $log['iWBackMoney 结果'] = $iWBackMoney = $iUnitNumW * $aFuzhi[$iCount - 1]->back_money; //万的
-                    $log['iUnitNumQ 算法'] = '( iUnitNum ' . $iUnitNum . '- iUnitNumW ' . $iUnitNumW . ') * 10';
-                    $log['iUnitNumQ 结果'] = $iUnitNumQ = floor(($iUnitNum - $iUnitNumW) * 10); //千的
-                    $log['iQBackMoney (iUnitNumQ * 10)'] = $iQBackMoney = $iUnitNumQ * 10; //千的
-                    $iBackMoney = $iWBackMoney + $iQBackMoney; //总的
-                    $log['iBackMoney'] = '(iWBackMoney + $iQBackMoney) 0~5万段最高返奖1.0% = ' . $iBackMoney;
-                    log_args_write($log);
-                    $data->back_money15 = $iBackMoney;
-                    dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '三');
-                    break;
-                }
-            }
-            if ($iTeamBets > $aFuzhi[0]->max_bets && ((!$oUserAgent->is_limit_active) || ($oUserAgent->is_limit_active && $iActiveUserNum >= $aFuzhi[0]->active_user_num))) {
-//fourth
-                $current_min = $aFuzhi[0]->max_bets;
-                $current_max = '无限';
-                $log = [];
-                $log['condition'] = '扶植期内　fourth : 最小扶植:' . $iTeamBets . '>' . $aFuzhi[0]->max_bets;
-                $log['需限制活跃人数'] = $oUserAgent->is_limit_active ? '是:' . $iActiveUserNum >= $aFuzhi[$iCount - 1]->active_user_num : '无';
-                $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                $temporary540 = $iMaxPrize4050 - $iMaxPrize15;
-                $log['5~50万段最高返奖1.0%'] = $temporary540 . ' = iMaxPrize4050 ' . $iMaxPrize4050 . ' - iMaxPrize15 ' . $iMaxPrize15;
-                $data->back_money540 = $temporary540;
-                $temporary4080 = $iMaxPrize140150 - $iMaxPrize4050;
-                $log['50~150万段最高返奖1.2%'] = $temporary4080 . ' = iMaxPrize140150 ' . $iMaxPrize140150 . ' - iMaxPrize4050 ' . $iMaxPrize4050;
-                log_args_write($log);
-                $data->back_money4080 = $temporary4080;
-                dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '四');
-                break;
-            }
             if ($iTeamBets > $oFuZhiRule->min_bets && $iTeamBets <= $oFuZhiRule->max_bets) {
-                if ((!$oUserAgent->is_limit_active) || ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num)) {
-                    $current_min = $oFuZhiRule->min_bets;
-                    $current_max = $oFuZhiRule->max_bets;
-                    $trace_state = '五';
-                    $log = [];
-                    $log['condition'] = '扶植期内　five :' . $oFuZhiRule->min_bets . '<' . $iTeamBets . '<=' . $oFuZhiRule->max_bets;
-//                            $iUnitNumW = floor($iTeamBets / 10000);
-                    //                            $iBackMoney = $iUnitNumW * 100; //万的
-                    $log['flag'] = $oFuZhiRule->flag;
-                    switch ($oFuZhiRule->flag) {
-                        case '5-10':
-                        case '10-20':
-                        case '20-30':
-                        case '30-40':
-                        case '40-50':
-                            $log['iUnitNumW'] = 'floor((' . $iTeamBets . ' - 50000) / 10000)';
-                            $iUnitNumW = floor(($iTeamBets - 50000) / 10000);
-                            $log['iBackMoney'] = $iUnitNumW . '*' . $oFuZhiRule->back_money;
-                            $iBackMoney = $iUnitNumW * $oFuZhiRule->back_money; //万的
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iBackMoney;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '50-60':
-                        case '60-70':
-                        case '70-80':
-                        case '80-90':
-                        case '90-100':
-                        case '100-110':
-                        case '110-120':
-                        case '120-130':
-                        case '130-140':
-                        case '140-150':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            $log['iUnitNumW'] = 'floor((' . $iTeamBets . ' - 50000) / 10000)';
-                            $iUnitNumW = floor(($iTeamBets - 500000) / 10000);
-                            $log['iBackMoney'] = $iUnitNumW . '*' . $oFuZhiRule->back_money;
-                            $iBackMoney = $iUnitNumW * $oFuZhiRule->back_money; //万的
-                            $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iBackMoney;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                    }
-                }
-            }
-            if ($iTeamBets > $oFuZhiRule->min_bets) {
-                //six
-                if ((!$oUserAgent->is_limit_active) || ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num)) {
-                    $current_min = $oFuZhiRule->min_bets;
-                    $current_max = '无限';
-                    $trace_state = '六';
-                    $log = [];
-                    $log['condition'] = '扶植期内　six :' . $iTeamBets . '>' . $oFuZhiRule->min_bets;
-                    $log['flag'] = $oFuZhiRule->flag;
-                    switch ($oFuZhiRule->flag) {
-                        case '1-5':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '5-10':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize510 - $iMaxPrize15;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '10-20':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize1020 - $iMaxPrize15;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '20-30':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize2030 - $iMaxPrize15;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '30-40':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize3040 - $iMaxPrize15;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '40-50':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '50-60':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize5060 - $iMaxPrize4050;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '60-70':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize6070 - $iMaxPrize4050;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '70-80':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize7080 - $iMaxPrize4050;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '80-90':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize8090 - $iMaxPrize4050;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '90-100':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize90100 - $iMaxPrize4050;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '100-110':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize100110 - $iMaxPrize4050;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '110-120':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize110120 - $iMaxPrize4050;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '120-130':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize120130 - $iMaxPrize4050;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                        case '130-140':
-                            $log['0~5万段最高返奖1.0%'] = $data->back_money15 = $iMaxPrize15;
-                            $log['5~50万段最高返奖1.0%'] = $data->back_money540 = $iMaxPrize4050 - $iMaxPrize15;
-                            $log['50~150万段最高返奖1.2%'] = $data->back_money4080 = $iMaxPrize130140 - $iMaxPrize4050;
-                            log_args_write($log);
-                            dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, $trace_state);
-                            break 2;
-                    }
+                $current_min = $oFuZhiRule->min_bets;
+                $current_max = $oFuZhiRule->max_bets;
+                $trace_state = '二';
+                $log = [];
+                $log['condition'] = '扶植期内新 :' . $oFuZhiRule->min_bets . '<' . $iTeamBets . '<=' . $oFuZhiRule->max_bets;
+                $log['flag'] = $oFuZhiRule->flag;
+                switch ($oFuZhiRule->flag) {
+                    case '1-5':
+                        $data->back_money15 = floor($iTeamBets / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
+                    case '5-10':
+                        $previous_max_15 = $aFuzhi[$oFuZhiRule->decrease_flag];
+                        $previous_max_15_price = $previous_max_15->max_price;
+                        $data->back_money15 = $previous_max_15_price;
+                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $data->back_money550 = floor(($iTeamBets - $previous_max_15->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        }
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
+                    case '10-20':
+                        //5-10万段的数据
+                        $previous_max_510_id = $oFuZhiRule->decrease_flag;
+                        $previous_max_510 = $aFuzhi[$previous_max_510_id];
+                        //1-5万段的数据
+                        $previous_max_15_id = $previous_max_510->decrease_flag;
+                        $previous_max_15 = $aFuzhi[$previous_max_15_id];
+                        //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
+                        //结算符合　1-5万段的数据
+                        $previous_max_15_price = $previous_max_15->max_price;
+                        //结算符合　5-10万段的数据
+                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        //结算符合　10-20万段的数据
+                        $previous_max_1020_price = 0;
+                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $previous_max_1020_price = floor(($iTeamBets - $previous_max_510->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        }
+
+                        //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money15 = $previous_max_15_price;
+                        $data->back_money550 = $previous_max_510_price + $previous_max_1020_price;
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
+                    case '20-30':
+                        //10-20 万段数据
+                        $previous_max_1020_id = $oFuZhiRule->decrease_flag;
+                        $previous_max_1020 = $aFuzhi[$previous_max_1020_id];
+                        //5-10万段的数据
+                        $previous_max_510_id = $previous_max_1020->decrease_flag;
+                        $previous_max_510 = $aFuzhi[$previous_max_510_id];
+                        //1-5万段的数据
+                        $previous_max_15_id = $previous_max_510->decrease_flag;
+                        $previous_max_15 = $aFuzhi[$previous_max_15_id];
+                        //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
+                        //结算符合　1-5万段的数据
+                        $previous_max_15_price = $previous_max_15->max_price;
+                        //结算符合　5-10万段的数据
+                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        //结算符合　10-20万段的数据
+                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        //结算符合　20-30万段的数据
+                        $previous_max_2030_price = 0;
+                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $previous_max_2030_price = floor(($iTeamBets - $previous_max_1020->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        }
+                        //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money15 = $previous_max_15_price;
+                        $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price;
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
+                    case '30-40':
+                        //20-30 万段数据
+                        $previous_max_2030_id = $oFuZhiRule->decrease_flag;
+                        $previous_max_2030 = $aFuzhi[$previous_max_2030_id];
+                        //10-20 万段数据
+                        $previous_max_1020_id = $previous_max_2030->decrease_flag;
+                        $previous_max_1020 = $aFuzhi[$previous_max_1020_id];
+                        //5-10万段的数据
+                        $previous_max_510_id = $previous_max_1020->decrease_flag;
+                        $previous_max_510 = $aFuzhi[$previous_max_510_id];
+                        //1-5万段的数据
+                        $previous_max_15_id = $previous_max_510->decrease_flag;
+                        $previous_max_15 = $aFuzhi[$previous_max_15_id];
+                        //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
+                        //结算符合　1-5万段的数据
+                        $previous_max_15_price = $previous_max_15->max_price;
+                        //结算符合　5-10万段的数据
+                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        //结算符合　10-20万段的数据
+                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        //结算符合　20-30万段的数据
+                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        //结算符合　30-40万段的数据
+                        $previous_max_3040_price = 0;
+                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $previous_max_3040_price = floor(($iTeamBets - $previous_max_2030->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        }
+
+                        //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money15 = $previous_max_15_price;
+                        $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price;
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
+                    case '40-50':
+                        //30-40 万段数据
+                        $previous_max_3040_id = $oFuZhiRule->decrease_flag;
+                        $previous_max_3040 = $aFuzhi[$previous_max_3040_id];
+                        //20-30 万段数据
+                        $previous_max_2030_id = $previous_max_3040->decrease_flag;
+                        $previous_max_2030 = $aFuzhi[$previous_max_2030_id];
+                        //10-20 万段数据
+                        $previous_max_1020_id = $previous_max_2030->decrease_flag;
+                        $previous_max_1020 = $aFuzhi[$previous_max_1020_id];
+                        //5-10万段的数据
+                        $previous_max_510_id = $previous_max_1020->decrease_flag;
+                        $previous_max_510 = $aFuzhi[$previous_max_510_id];
+                        //1-5万段的数据
+                        $previous_max_15_id = $previous_max_510->decrease_flag;
+                        $previous_max_15 = $aFuzhi[$previous_max_15_id];
+                        //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
+                        //结算符合　1-5万段的数据
+                        $previous_max_15_price = $previous_max_15->max_price;
+                        //结算符合　5-10万段的数据
+                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        //结算符合　10-20万段的数据
+                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        //结算符合　20-30万段的数据
+                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        //结算符合　30-40万段的数据
+                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        //结算符合　40-50万段的数据
+                        $previous_max_4050_price = 0;
+                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $previous_max_4050_price = floor(($iTeamBets - $previous_max_3040->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        }
+
+                        //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money15 = $previous_max_15_price;
+                        $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
+                    case '50-60':
+                        //40-50 万段数据
+                        $previous_max_4050_id = $oFuZhiRule->decrease_flag;
+                        $previous_max_4050 = $aFuzhi[$previous_max_4050_id];
+                        //30-40 万段数据
+                        $previous_max_3040_id = $previous_max_4050->decrease_flag;
+                        $previous_max_3040 = $aFuzhi[$previous_max_3040_id];
+                        //20-30 万段数据
+                        $previous_max_2030_id = $previous_max_3040->decrease_flag;
+                        $previous_max_2030 = $aFuzhi[$previous_max_2030_id];
+                        //10-20 万段数据
+                        $previous_max_1020_id = $previous_max_2030->decrease_flag;
+                        $previous_max_1020 = $aFuzhi[$previous_max_1020_id];
+                        //5-10万段的数据
+                        $previous_max_510_id = $previous_max_1020->decrease_flag;
+                        $previous_max_510 = $aFuzhi[$previous_max_510_id];
+                        //1-5万段的数据
+                        $previous_max_15_id = $previous_max_510->decrease_flag;
+                        $previous_max_15 = $aFuzhi[$previous_max_15_id];
+                        //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
+                        //结算符合　1-5万段的数据
+                        $previous_max_15_price = $previous_max_15->max_price;
+                        //结算符合　5-10万段的数据
+                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        //结算符合　10-20万段的数据
+                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        //结算符合　20-30万段的数据
+                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        //结算符合　30-40万段的数据
+                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        //结算符合　40-50万段的数据
+                        $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        //结算符合　50-60万段的数据
+                        $previous_max_5060_price = 0;
+                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $previous_max_5060_price = floor(($iTeamBets - $previous_max_4050->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        }
+                        //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money15 = $previous_max_15_price;
+                        $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
+                        $data->back_money50150 = $previous_max_5060_price;
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
+                    case '60-70':
+                        //50-60 万段数据
+                        $previous_max_5060_id = $oFuZhiRule->decrease_flag;
+                        $previous_max_5060 = $aFuzhi[$previous_max_5060_id];
+                        //40-50 万段数据
+                        $previous_max_4050_id = $previous_max_5060->decrease_flag;
+                        $previous_max_4050 = $aFuzhi[$previous_max_4050_id];
+                        //30-40 万段数据
+                        $previous_max_3040_id = $previous_max_4050->decrease_flag;
+                        $previous_max_3040 = $aFuzhi[$previous_max_3040_id];
+                        //20-30 万段数据
+                        $previous_max_2030_id = $previous_max_3040->decrease_flag;
+                        $previous_max_2030 = $aFuzhi[$previous_max_2030_id];
+                        //10-20 万段数据
+                        $previous_max_1020_id = $previous_max_2030->decrease_flag;
+                        $previous_max_1020 = $aFuzhi[$previous_max_1020_id];
+                        //5-10万段的数据
+                        $previous_max_510_id = $previous_max_1020->decrease_flag;
+                        $previous_max_510 = $aFuzhi[$previous_max_510_id];
+                        //1-5万段的数据
+                        $previous_max_15_id = $previous_max_510->decrease_flag;
+                        $previous_max_15 = $aFuzhi[$previous_max_15_id];
+                        //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
+                        //结算符合　1-5万段的数据
+                        $previous_max_15_price = $previous_max_15->max_price;
+                        //##############################################
+                        //结算符合　5-10万段的数据
+                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        //结算符合　10-20万段的数据
+                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        //结算符合　20-30万段的数据
+                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        //结算符合　30-40万段的数据
+                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        //结算符合　40-50万段的数据
+                        $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        //##############################################
+                        //结算符合　5060 万段的数据
+                        $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        //结算符合　6070 万段的数据
+                        $previous_max_6070_price = 0;
+                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $previous_max_6070_price = floor(($iTeamBets - $previous_max_5060->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        }
+                        //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money15 = $previous_max_15_price;
+                        $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
+                        $data->back_money50150 = $previous_max_5060_price + $previous_max_6070_price;
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
+                    case '70-80':
+                        //6070 万段数据
+                        $previous_max_6070_id = $oFuZhiRule->decrease_flag;
+                        $previous_max_6070 = $aFuzhi[$previous_max_6070_id];
+                        //5060 万段数据
+                        $previous_max_5060_id = $previous_max_6070->decrease_flag;
+                        $previous_max_5060 = $aFuzhi[$previous_max_5060_id];
+                        //40-50 万段数据
+                        $previous_max_4050_id = $previous_max_5060->decrease_flag;
+                        $previous_max_4050 = $aFuzhi[$previous_max_4050_id];
+                        //30-40 万段数据
+                        $previous_max_3040_id = $previous_max_4050->decrease_flag;
+                        $previous_max_3040 = $aFuzhi[$previous_max_3040_id];
+                        //20-30 万段数据
+                        $previous_max_2030_id = $previous_max_3040->decrease_flag;
+                        $previous_max_2030 = $aFuzhi[$previous_max_2030_id];
+                        //10-20 万段数据
+                        $previous_max_1020_id = $previous_max_2030->decrease_flag;
+                        $previous_max_1020 = $aFuzhi[$previous_max_1020_id];
+                        //5-10万段的数据
+                        $previous_max_510_id = $previous_max_1020->decrease_flag;
+                        $previous_max_510 = $aFuzhi[$previous_max_510_id];
+                        //1-5万段的数据
+                        $previous_max_15_id = $previous_max_510->decrease_flag;
+                        $previous_max_15 = $aFuzhi[$previous_max_15_id];
+                        //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
+                        //结算符合　1-5万段的数据
+                        $previous_max_15_price = $previous_max_15->max_price;
+                        //##############################################
+                        //结算符合　5-10万段的数据
+                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        //结算符合　10-20万段的数据
+                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        //结算符合　20-30万段的数据
+                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        //结算符合　30-40万段的数据
+                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        //结算符合　40-50万段的数据
+                        $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        //##############################################
+                        //结算符合　5060 万段的数据
+                        $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        //结算符合　6070 万段的数据
+                        $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
+                        //结算符合　70-80 万段的数据
+                        $previous_max_7080_price = 0;
+                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $previous_max_7080_price = floor(($iTeamBets - $previous_max_6070->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        }
+                        //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money15 = $previous_max_15_price;
+                        $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
+                        $data->back_money50150 = $previous_max_5060_price + $previous_max_6070_price + $previous_max_7080_price;
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
+                    case '80-150':
+                        //70-80 万段数据
+                        $previous_max_7080_id = $oFuZhiRule->decrease_flag;
+                        $previous_max_7080 = $aFuzhi[$previous_max_7080_id];
+                        //6070 万段数据
+                        $previous_max_6070_id = $previous_max_7080->decrease_flag;
+                        $previous_max_6070 = $aFuzhi[$previous_max_6070_id];
+                        //5060 万段数据
+                        $previous_max_5060_id = $previous_max_6070->decrease_flag;
+                        $previous_max_5060 = $aFuzhi[$previous_max_5060_id];
+                        //40-50 万段数据
+                        $previous_max_4050_id = $previous_max_5060->decrease_flag;
+                        $previous_max_4050 = $aFuzhi[$previous_max_4050_id];
+                        //30-40 万段数据
+                        $previous_max_3040_id = $previous_max_4050->decrease_flag;
+                        $previous_max_3040 = $aFuzhi[$previous_max_3040_id];
+                        //20-30 万段数据
+                        $previous_max_2030_id = $previous_max_3040->decrease_flag;
+                        $previous_max_2030 = $aFuzhi[$previous_max_2030_id];
+                        //10-20 万段数据
+                        $previous_max_1020_id = $previous_max_2030->decrease_flag;
+                        $previous_max_1020 = $aFuzhi[$previous_max_1020_id];
+                        //5-10万段的数据
+                        $previous_max_510_id = $previous_max_1020->decrease_flag;
+                        $previous_max_510 = $aFuzhi[$previous_max_510_id];
+                        //1-5万段的数据
+                        $previous_max_15_id = $previous_max_510->decrease_flag;
+                        $previous_max_15 = $aFuzhi[$previous_max_15_id];
+                        //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
+                        //结算符合　1-5万段的数据
+                        $previous_max_15_price = $previous_max_15->max_price;
+                        //##############################################
+                        //结算符合　5-10万段的数据
+                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        //结算符合　10-20万段的数据
+                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        //结算符合　20-30万段的数据
+                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        //结算符合　30-40万段的数据
+                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        //结算符合　40-50万段的数据
+                        $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        //##############################################
+                        //结算符合　5060 万段的数据
+                        $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        //结算符合　6070 万段的数据
+                        $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
+                        //结算符合　70-80 万段的数据
+                        $previous_max_7080_price = $previous_max_7080->max_price - $previous_max_6070->max_price;
+                        //结算符合　80-90 万段的数据
+                        $previous_max_80150_price = 0;
+                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $previous_max_80150_price = floor(($iTeamBets - $previous_max_7080->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        }
+                        //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money15 = $previous_max_15_price;
+                        $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
+                        $data->back_money50150 = $previous_max_5060_price + $previous_max_6070_price + $previous_max_7080_price + $previous_max_80150_price;
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
+                    case '150-250':
+                        //80-150 万段的数据
+                        $previous_max_80150_id = $oFuZhiRule->decrease_flag;
+                        $previous_max_80150 = $aFuzhi[$previous_max_80150_id];
+                        //70-80 万段数据
+                        $previous_max_7080_id = $previous_max_80150->decrease_flag;
+                        $previous_max_7080 = $aFuzhi[$previous_max_7080_id];
+                        //6070 万段数据
+                        $previous_max_6070_id = $previous_max_7080->decrease_flag;
+                        $previous_max_6070 = $aFuzhi[$previous_max_6070_id];
+                        //5060 万段数据
+                        $previous_max_5060_id = $previous_max_6070->decrease_flag;
+                        $previous_max_5060 = $aFuzhi[$previous_max_5060_id];
+                        //40-50 万段数据
+                        $previous_max_4050_id = $previous_max_5060->decrease_flag;
+                        $previous_max_4050 = $aFuzhi[$previous_max_4050_id];
+                        //30-40 万段数据
+                        $previous_max_3040_id = $previous_max_4050->decrease_flag;
+                        $previous_max_3040 = $aFuzhi[$previous_max_3040_id];
+                        //20-30 万段数据
+                        $previous_max_2030_id = $previous_max_3040->decrease_flag;
+                        $previous_max_2030 = $aFuzhi[$previous_max_2030_id];
+                        //10-20 万段数据
+                        $previous_max_1020_id = $previous_max_2030->decrease_flag;
+                        $previous_max_1020 = $aFuzhi[$previous_max_1020_id];
+                        //5-10万段的数据
+                        $previous_max_510_id = $previous_max_1020->decrease_flag;
+                        $previous_max_510 = $aFuzhi[$previous_max_510_id];
+                        //1-5万段的数据
+                        $previous_max_15_id = $previous_max_510->decrease_flag;
+                        $previous_max_15 = $aFuzhi[$previous_max_15_id];
+                        //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
+                        //结算符合　1-5万段的数据
+                        $previous_max_15_price = $previous_max_15->max_price;
+                        //##############################################
+                        //结算符合　5-10万段的数据
+                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        //结算符合　10-20万段的数据
+                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        //结算符合　20-30万段的数据
+                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        //结算符合　30-40万段的数据
+                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        //结算符合　40-50万段的数据
+                        $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        //##############################################
+                        //结算符合　5060 万段的数据
+                        $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        //结算符合　6070 万段的数据
+                        $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
+                        //结算符合　70-80 万段的数据
+                        $previous_max_7080_price = $previous_max_7080->max_price - $previous_max_6070->max_price;
+                        //结算符合　80-150 万段的数据
+                        $previous_max_80150_price = $previous_max_80150->max_price - $previous_max_7080->max_price;
+                        //结算符合　150-250 万段的数据
+                        $previous_max_150250_price = 0;
+                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $previous_max_150250_price = floor(($iTeamBets - $previous_max_80150->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        }
+                        //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money15 = $previous_max_15_price;
+                        $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
+                        $data->back_money50150 = $previous_max_5060_price + $previous_max_6070_price + $previous_max_7080_price + $previous_max_80150_price;
+                        $data->back_money150250 = $previous_max_150250_price;
+                        dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                        break 2;
                 }
             }
         }
-        echo '已完成任务。。。》最终有效金额＝' . $iTeamBets . '与人数量＝' . $iActiveUserNum . '|[0~5万段最高返奖1.0%]=>' . $data->back_money15 . '[5~50万段最高返奖1.0%]＝》' . $data->back_money540 . '[50~150万段最高返奖1.2%]＝》' . $data->back_money4080 . "\n";
+        echo '已完成任务。。。》最终有效金额＝' . $iTeamBets . '与人数量＝' . $iActiveUserNum . '|[0~１万]=>' . $data->back_money01 . '[1~5万]＝》' . $data->back_money15 . '[5~50万]＝》' . $data->back_money550 . '[50~150]＝》' . $data->back_money50150 . '[150~250]＝》' . $data->back_money150250 . "\n";
     }
 }
 echo 'finished';
 function dd(Data $d, Agent $oUserAgent, $current_min, $current_max, $activeUser, $iTeamBets, $condition)
 {
+//    var_dump($d);die();
     $log = '';
     $log .= '|目前活跃人数　＝' . $activeUser;
-    $log .= '|目前金额　＝》' . $iTeamBets . '|[0~5万段最高返奖1.0%]=>' . $d->back_money15 . '[5~50万段最高返奖1.0%]＝》' . $d->back_money540 . '[50~150万段最高返奖1.2%]＝》' . $d->back_money4080;
-    $log .= '|得到工资　＝》' . ((int)$d->back_money15 + (int)$d->back_money540 + (int)$d->back_money4080);
+    $log .= '|目前金额　＝》' . $iTeamBets . '|[0~１万]=>' . $d->back_money01 . '|[1~5万]=>' . $d->back_money15 . '[5~50万]＝》' . $d->back_money550 . '[50~150万]＝》' . $d->back_money50150 . '[150~250]＝》' . $d->back_money150250;
+    $log .= '|得到工资　＝》' . ((int)$d->back_money01 + (int)$d->back_money15 + (int)$d->back_money550 + (int)$d->back_money50150 + (int)$d->back_money150250);
     $log .= '￥|条件　＝》投注量' . $current_min . '与' . $current_max . '之间';
     $log .= '|需限制活跃人数　＝' . $islimit = empty($oUserAgent->is_limit_active) ? '否' : '是';
     $log .= '|目前进入状态《' . $condition . '》';
