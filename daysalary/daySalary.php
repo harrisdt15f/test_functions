@@ -93,7 +93,7 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
         foreach ($aFuzhi as $iFuZhiKey => $oFuZhiRule) {
             if ($iTeamBets <= 10000) {
 //first
-                $current_min ='无限';
+                $current_min = '无限';
                 $current_max = 10000;
                 $log = [];
                 $log['iBackMoney 0~1万段最高返奖1.0%'] = $iBackMoney = $iTeamBets * 0.01;
@@ -123,7 +123,7 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
                         $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
-                    case '5-10':
+                    case '5-10'://开始限制活跃人数
                         $previous_max_15 = $aFuzhi[$oFuZhiRule->decrease_flag];
                         $previous_max_15_price = $previous_max_15->max_price;
                         $previous_max_510_price = 0;
@@ -147,8 +147,12 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
                         //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
                         //结算符合　1-5万段的数据
                         $previous_max_15_price = $previous_max_15->max_price;
-                        //结算符合　5-10万段的数据
-                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        //开始限制活跃人数
+                        $previous_max_510_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_510->active_user_num) {
+                            //结算符合　5-10万段的数据
+                            $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        }
                         //结算符合　10-20万段的数据
                         $previous_max_1020_price = 0;
                         if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
@@ -176,10 +180,17 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
                         //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
                         //结算符合　1-5万段的数据
                         $previous_max_15_price = $previous_max_15->max_price;
-                        //结算符合　5-10万段的数据
-                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
-                        //结算符合　10-20万段的数据
-                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        //开始限制活跃人数
+                        $previous_max_510_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_510->active_user_num) {
+                            //结算符合　5-10万段的数据
+                            $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        }
+                        $previous_max_1020_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_1020->active_user_num) {
+                            //结算符合　10-20万段的数据
+                            $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        }
                         //结算符合　20-30万段的数据
                         $previous_max_2030_price = 0;
                         if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
@@ -209,12 +220,22 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
                         //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
                         //结算符合　1-5万段的数据
                         $previous_max_15_price = $previous_max_15->max_price;
+                        //开始限制活跃人数
                         //结算符合　5-10万段的数据
-                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        $previous_max_510_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_510->active_user_num) {
+                            $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        }
                         //结算符合　10-20万段的数据
-                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        $previous_max_1020_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_1020->active_user_num) {
+                            $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        }
                         //结算符合　20-30万段的数据
-                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        $previous_max_2030_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_2030->active_user_num) {
+                            $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        }
                         //结算符合　30-40万段的数据
                         $previous_max_3040_price = 0;
                         if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
@@ -249,19 +270,30 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
                         //结算符合　1-5万段的数据
                         $previous_max_15_price = $previous_max_15->max_price;
                         //结算符合　5-10万段的数据
-                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        $previous_max_510_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_510->active_user_num) {
+                            $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        }
                         //结算符合　10-20万段的数据
-                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        $previous_max_1020_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_1020->active_user_num) {
+                            $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        }
                         //结算符合　20-30万段的数据
-                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        $previous_max_2030_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_2030->active_user_num) {
+                            $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        }
                         //结算符合　30-40万段的数据
-                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        $previous_max_3040_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_3040->active_user_num) {
+                            $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        }
                         //结算符合　40-50万段的数据
                         $previous_max_4050_price = 0;
                         if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
                             $previous_max_4050_price = floor(($iTeamBets - $previous_max_3040->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
-
                         //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
                         $data->back_money01 = 0;
                         $data->back_money15 = $previous_max_15_price;
@@ -293,15 +325,30 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
                         //结算符合　1-5万段的数据
                         $previous_max_15_price = $previous_max_15->max_price;
                         //结算符合　5-10万段的数据
-                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        $previous_max_510_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_510->active_user_num) {
+                            $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        }
                         //结算符合　10-20万段的数据
-                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        $previous_max_1020_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_1020->active_user_num) {
+                            $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        }
                         //结算符合　20-30万段的数据
-                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        $previous_max_2030_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_2030->active_user_num) {
+                            $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        }
                         //结算符合　30-40万段的数据
-                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        $previous_max_3040_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_3040->active_user_num) {
+                            $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        }
                         //结算符合　40-50万段的数据
-                        $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        $previous_max_4050_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_4050->active_user_num) {
+                            $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        }
                         //结算符合　50-60万段的数据
                         $previous_max_5060_price = 0;
                         if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
@@ -342,18 +389,36 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
                         $previous_max_15_price = $previous_max_15->max_price;
                         //##############################################
                         //结算符合　5-10万段的数据
-                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        $previous_max_510_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_510->active_user_num) {
+                            $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        }
                         //结算符合　10-20万段的数据
-                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        $previous_max_1020_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_1020->active_user_num) {
+                            $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        }
                         //结算符合　20-30万段的数据
-                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        $previous_max_2030_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_2030->active_user_num) {
+                            $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        }
                         //结算符合　30-40万段的数据
-                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        $previous_max_3040_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_3040->active_user_num) {
+                            $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        }
                         //结算符合　40-50万段的数据
-                        $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        $previous_max_4050_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_4050->active_user_num) {
+                            $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        }
                         //##############################################
                         //结算符合　5060 万段的数据
-                        $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        $previous_max_5060_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_5060->active_user_num) {
+                            $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        }
                         //结算符合　6070 万段的数据
                         $previous_max_6070_price = 0;
                         if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
@@ -397,20 +462,40 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
                         $previous_max_15_price = $previous_max_15->max_price;
                         //##############################################
                         //结算符合　5-10万段的数据
-                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        $previous_max_510_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_510->active_user_num) {
+                            $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        }
                         //结算符合　10-20万段的数据
-                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        $previous_max_1020_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_1020->active_user_num) {
+                            $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        }
                         //结算符合　20-30万段的数据
-                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        $previous_max_2030_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_2030->active_user_num) {
+                            $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        }
                         //结算符合　30-40万段的数据
-                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        $previous_max_3040_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_3040->active_user_num) {
+                            $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        }
                         //结算符合　40-50万段的数据
-                        $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
-                        //##############################################
+                        $previous_max_4050_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_4050->active_user_num) {
+                            $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        }
                         //结算符合　5060 万段的数据
-                        $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        $previous_max_5060_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_5060->active_user_num) {
+                            $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        }
                         //结算符合　6070 万段的数据
-                        $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
+                        $previous_max_6070_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_6070->active_user_num) {
+                            $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
+                        }
                         //结算符合　70-80 万段的数据
                         $previous_max_7080_price = 0;
                         if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
@@ -457,22 +542,46 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
                         $previous_max_15_price = $previous_max_15->max_price;
                         //##############################################
                         //结算符合　5-10万段的数据
-                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        $previous_max_510_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_510->active_user_num) {
+                            $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        }
                         //结算符合　10-20万段的数据
-                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        $previous_max_1020_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_1020->active_user_num) {
+                            $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        }
                         //结算符合　20-30万段的数据
-                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        $previous_max_2030_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_2030->active_user_num) {
+                            $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        }
                         //结算符合　30-40万段的数据
-                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        $previous_max_3040_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_3040->active_user_num) {
+                            $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        }
                         //结算符合　40-50万段的数据
-                        $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        $previous_max_4050_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_4050->active_user_num) {
+                            $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        }
                         //##############################################
                         //结算符合　5060 万段的数据
-                        $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        $previous_max_5060_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_5060->active_user_num) {
+                            $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        }
                         //结算符合　6070 万段的数据
-                        $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
+                        $previous_max_6070_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_6070->active_user_num) {
+                            $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
+                        }
                         //结算符合　70-80 万段的数据
-                        $previous_max_7080_price = $previous_max_7080->max_price - $previous_max_6070->max_price;
+                        $previous_max_7080_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_7080->active_user_num) {
+                            $previous_max_7080_price = $previous_max_7080->max_price - $previous_max_6070->max_price;
+                        }
                         //结算符合　80-90 万段的数据
                         $previous_max_80150_price = 0;
                         if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
@@ -522,24 +631,51 @@ foreach ($activeuser_arr as $key => $iActiveUserNum) {
                         $previous_max_15_price = $previous_max_15->max_price;
                         //##############################################
                         //结算符合　5-10万段的数据
-                        $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        $previous_max_510_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_510->active_user_num) {
+                            $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                        }
                         //结算符合　10-20万段的数据
-                        $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        $previous_max_1020_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_1020->active_user_num) {
+                            $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                        }
                         //结算符合　20-30万段的数据
-                        $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        $previous_max_2030_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_2030->active_user_num) {
+                            $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                        }
                         //结算符合　30-40万段的数据
-                        $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        $previous_max_3040_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_3040->active_user_num) {
+                            $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                        }
                         //结算符合　40-50万段的数据
-                        $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        $previous_max_4050_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_4050->active_user_num) {
+                            $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                        }
                         //##############################################
                         //结算符合　5060 万段的数据
-                        $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        $previous_max_5060_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_5060->active_user_num) {
+                            $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                        }
                         //结算符合　6070 万段的数据
-                        $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
+                        $previous_max_6070_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_6070->active_user_num) {
+                            $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
+                        }
                         //结算符合　70-80 万段的数据
-                        $previous_max_7080_price = $previous_max_7080->max_price - $previous_max_6070->max_price;
+                        $previous_max_7080_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_7080->active_user_num) {
+                            $previous_max_7080_price = $previous_max_7080->max_price - $previous_max_6070->max_price;
+                        }
                         //结算符合　80-150 万段的数据
-                        $previous_max_80150_price = $previous_max_80150->max_price - $previous_max_7080->max_price;
+                        $previous_max_80150_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_80150->active_user_num) {
+                            $previous_max_80150_price = $previous_max_80150->max_price - $previous_max_7080->max_price;
+                        }
                         //结算符合　150-250 万段的数据
                         $previous_max_150250_price = 0;
                         if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
