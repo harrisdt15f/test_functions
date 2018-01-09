@@ -80,7 +80,9 @@ $iMaxPrize150250 = 30000;
 
 $iCount = count($aFuzhi);
 $iMinBets = 1000;
-for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
+$activeuser_arr = [0, 2, 3, 6, 10, 15, 20, 25, 30, 35, 40, 50];
+foreach ($activeuser_arr as $key => $iActiveUserNum) {
+//for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
     for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
         $current_min = 0;
         $current_max = 0;
@@ -89,15 +91,19 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
 //        $current_min = 0;
 //        $current_max = 0;
         foreach ($aFuzhi as $iFuZhiKey => $oFuZhiRule) {
-            $current_min = $oFuZhiRule->min_bets;
-            $current_max = $oFuZhiRule->max_bets;
             if ($iTeamBets <= 10000) {
 //first
+                $current_min ='无限';
+                $current_max = 10000;
                 $log = [];
                 $log['iBackMoney 0~1万段最高返奖1.0%'] = $iBackMoney = $iTeamBets * 0.01;
                 $data->back_money01 = $iBackMoney;
+                $data->back_money15 = 0;
+                $data->back_money550 = 0;
+                $data->back_money50150 = 0;
+                $data->back_money150250 = 0;
                 $log['condition'] = '扶植期内　first : bet(' . $iTeamBets . ')《 10000';
-                log_args_write($log);
+//                log_args_write($log);
                 dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                 break;
             }
@@ -110,16 +116,25 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                 $log['flag'] = $oFuZhiRule->flag;
                 switch ($oFuZhiRule->flag) {
                     case '1-5':
+                        $data->back_money01 = 0;
                         $data->back_money15 = floor($iTeamBets / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        $data->back_money550 = 0;
+                        $data->back_money50150 = 0;
+                        $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
                     case '5-10':
                         $previous_max_15 = $aFuzhi[$oFuZhiRule->decrease_flag];
                         $previous_max_15_price = $previous_max_15->max_price;
-                        $data->back_money15 = $previous_max_15_price;
-                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
-                            $data->back_money550 = floor(($iTeamBets - $previous_max_15->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
+                        $previous_max_510_price = 0;
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                            $previous_max_510_price = floor(($iTeamBets - $previous_max_15->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
+                        $data->back_money01 = 0;
+                        $data->back_money15 = $previous_max_15_price;
+                        $data->back_money550 = $previous_max_510_price;
+                        $data->back_money50150 = 0;
+                        $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
                     case '10-20':
@@ -136,13 +151,16 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                         $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
                         //结算符合　10-20万段的数据
                         $previous_max_1020_price = 0;
-                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
                             $previous_max_1020_price = floor(($iTeamBets - $previous_max_510->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
 
                         //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money01 = 0;
                         $data->back_money15 = $previous_max_15_price;
                         $data->back_money550 = $previous_max_510_price + $previous_max_1020_price;
+                        $data->back_money50150 = 0;
+                        $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
                     case '20-30':
@@ -164,12 +182,15 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                         $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
                         //结算符合　20-30万段的数据
                         $previous_max_2030_price = 0;
-                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
                             $previous_max_2030_price = floor(($iTeamBets - $previous_max_1020->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
                         //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money01 = 0;
                         $data->back_money15 = $previous_max_15_price;
                         $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price;
+                        $data->back_money50150 = 0;
+                        $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
                     case '30-40':
@@ -196,13 +217,16 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                         $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
                         //结算符合　30-40万段的数据
                         $previous_max_3040_price = 0;
-                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
                             $previous_max_3040_price = floor(($iTeamBets - $previous_max_2030->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
 
                         //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money01 = 0;
                         $data->back_money15 = $previous_max_15_price;
                         $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price;
+                        $data->back_money50150 = 0;
+                        $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
                     case '40-50':
@@ -234,13 +258,16 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                         $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
                         //结算符合　40-50万段的数据
                         $previous_max_4050_price = 0;
-                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
                             $previous_max_4050_price = floor(($iTeamBets - $previous_max_3040->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
 
                         //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money01 = 0;
                         $data->back_money15 = $previous_max_15_price;
                         $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
+                        $data->back_money50150 = 0;
+                        $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
                     case '50-60':
@@ -277,13 +304,15 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                         $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
                         //结算符合　50-60万段的数据
                         $previous_max_5060_price = 0;
-                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
                             $previous_max_5060_price = floor(($iTeamBets - $previous_max_4050->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
                         //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money01 = 0;
                         $data->back_money15 = $previous_max_15_price;
                         $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
                         $data->back_money50150 = $previous_max_5060_price;
+                        $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
                     case '60-70':
@@ -327,13 +356,15 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                         $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
                         //结算符合　6070 万段的数据
                         $previous_max_6070_price = 0;
-                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
                             $previous_max_6070_price = floor(($iTeamBets - $previous_max_5060->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
                         //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money01 = 0;
                         $data->back_money15 = $previous_max_15_price;
                         $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
                         $data->back_money50150 = $previous_max_5060_price + $previous_max_6070_price;
+                        $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
                     case '70-80':
@@ -382,13 +413,15 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                         $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
                         //结算符合　70-80 万段的数据
                         $previous_max_7080_price = 0;
-                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
                             $previous_max_7080_price = floor(($iTeamBets - $previous_max_6070->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
                         //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money01 = 0;
                         $data->back_money15 = $previous_max_15_price;
                         $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
                         $data->back_money50150 = $previous_max_5060_price + $previous_max_6070_price + $previous_max_7080_price;
+                        $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
                     case '80-150':
@@ -442,13 +475,15 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                         $previous_max_7080_price = $previous_max_7080->max_price - $previous_max_6070->max_price;
                         //结算符合　80-90 万段的数据
                         $previous_max_80150_price = 0;
-                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
                             $previous_max_80150_price = floor(($iTeamBets - $previous_max_7080->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
                         //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money01 = 0;
                         $data->back_money15 = $previous_max_15_price;
                         $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
                         $data->back_money50150 = $previous_max_5060_price + $previous_max_6070_price + $previous_max_7080_price + $previous_max_80150_price;
+                        $data->back_money150250 = 0;
                         dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
                         break 2;
                     case '150-250':
@@ -507,10 +542,11 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                         $previous_max_80150_price = $previous_max_80150->max_price - $previous_max_7080->max_price;
                         //结算符合　150-250 万段的数据
                         $previous_max_150250_price = 0;
-                        if ($oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
+                        if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $oFuZhiRule->active_user_num) {
                             $previous_max_150250_price = floor(($iTeamBets - $previous_max_80150->max_bets) / $oFuZhiRule->unit) * $oFuZhiRule->back_money;
                         }
                         //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                        $data->back_money01 = 0;
                         $data->back_money15 = $previous_max_15_price;
                         $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
                         $data->back_money50150 = $previous_max_5060_price + $previous_max_6070_price + $previous_max_7080_price + $previous_max_80150_price;
