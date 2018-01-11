@@ -1,5 +1,4 @@
 <?php
-
 date_default_timezone_set('Asia/Shanghai');
 include_once(__DIR__ . DIRECTORY_SEPARATOR . 'Logs.php');
 
@@ -80,9 +79,9 @@ $iMaxPrize150250 = 30000;
 
 $iCount = count($aFuzhi);
 $iMinBets = 1000;
-$activeuser_arr = [0, 2, 3, 6, 10, 15, 20, 25, 30, 35, 40, 50];
-foreach ($activeuser_arr as $key => $iActiveUserNum) {
-//for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
+//$activeuser_arr = [0, 2, 3, 6, 10, 15, 20, 25, 30, 35, 40, 50];
+//foreach ($activeuser_arr as $key => $iActiveUserNum) {
+for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
     for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
         $current_min = 0;
         $current_max = 0;
@@ -702,7 +701,7 @@ function dd(Data $d, Agent $oUserAgent, $current_min, $current_max, $activeUser,
     $log = '';
     $log .= '|目前活跃人数　＝' . $activeUser;
     $log .= '|目前金额　＝》' . $iTeamBets . '|[0~１万]=>' . $d->back_money01 . '|[1~5万]=>' . $d->back_money15 . '[5~50万]＝》' . $d->back_money550 . '[50~150万]＝》' . $d->back_money50150 . '[150~250]＝》' . $d->back_money150250;
-    $log .= '|得到工资　＝》' . ((int)$d->back_money01 + (int)$d->back_money15 + (int)$d->back_money550 + (int)$d->back_money50150 + (int)$d->back_money150250);
+    $log .= '|得到工资　＝》' . ($d->back_money01 + $d->back_money15 + $d->back_money550 + $d->back_money50150 + $d->back_money150250);
     $log .= '￥|条件　＝》投注量' . $current_min . '与' . $current_max . '之间';
     $log .= '|需限制活跃人数　＝' . $islimit = empty($oUserAgent->is_limit_active) ? '否' : '是';
     $log .= '|目前进入状态《' . $condition . '》';
