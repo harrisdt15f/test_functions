@@ -45,8 +45,8 @@ Class Salary
     }
 }
 
-$maximum_active_user = 50;
-$maximum_amount_bet = 2500000;
+$maximum_active_user = 1;
+$maximum_amount_bet = 10000.02;
 
 $fuzhiRule = '[{"id":1,"min_bets":10000,"max_bets":50000,"active_user_num":0,"nactive_user_num":0,"unit":1000,"back_money":10,"nback_money":10,"flag":"1-5","decrease_flag":null,"max_price":500,"created_at":null,"updated_at":null},{"id":2,"min_bets":50000,"max_bets":100000,"active_user_num":3,"nactive_user_num":3,"unit":10000,"back_money":100,"nback_money":100,"flag":"5-10","decrease_flag":"1-5","max_price":1000,"created_at":null,"updated_at":null},{"id":3,"min_bets":100000,"max_bets":200000,"active_user_num":6,"nactive_user_num":6,"unit":10000,"back_money":100,"nback_money":100,"flag":"10-20","decrease_flag":"5-10","max_price":2000,"created_at":null,"updated_at":null},{"id":4,"min_bets":200000,"max_bets":300000,"active_user_num":10,"nactive_user_num":10,"unit":10000,"back_money":100,"nback_money":100,"flag":"20-30","decrease_flag":"10-20","max_price":3000,"created_at":null,"updated_at":null},{"id":5,"min_bets":300000,"max_bets":400000,"active_user_num":15,"nactive_user_num":15,"unit":10000,"back_money":100,"nback_money":100,"flag":"30-40","decrease_flag":"20-30","max_price":4000,"created_at":null,"updated_at":null},{"id":6,"min_bets":400000,"max_bets":500000,"active_user_num":20,"nactive_user_num":20,"unit":10000,"back_money":100,"nback_money":100,"flag":"40-50","decrease_flag":"30-40","max_price":5000,"created_at":null,"updated_at":null},{"id":7,"min_bets":500000,"max_bets":600000,"active_user_num":25,"nactive_user_num":25,"unit":10000,"back_money":120,"nback_money":120,"flag":"50-60","decrease_flag":"40-50","max_price":6200,"created_at":null,"updated_at":null},{"id":8,"min_bets":600000,"max_bets":700000,"active_user_num":30,"nactive_user_num":30,"unit":10000,"back_money":120,"nback_money":120,"flag":"60-70","decrease_flag":"50-60","max_price":7400,"created_at":null,"updated_at":null},{"id":9,"min_bets":700000,"max_bets":800000,"active_user_num":35,"nactive_user_num":35,"unit":10000,"back_money":120,"nback_money":120,"flag":"70-80","decrease_flag":"60-70","max_price":8600,"created_at":null,"updated_at":null},{"id":10,"min_bets":800000,"max_bets":1500000,"active_user_num":40,"nactive_user_num":40,"unit":10000,"back_money":120,"nback_money":120,"flag":"80-150","decrease_flag":"70-80","max_price":17000,"created_at":null,"updated_at":null},{"id":11,"min_bets":1500000,"max_bets":2500000,"active_user_num":50,"nactive_user_num":50,"unit":10000,"back_money":130,"nback_money":130,"flag":"150-250","decrease_flag":"80-150","max_price":30000,"created_at":null,"updated_at":null}]';
 $aFuzhi_raw = json_decode($fuzhiRule);
@@ -79,10 +79,10 @@ $iMaxPrize150250 = 30000;
 
 $iCount = count($aFuzhi);
 $iMinBets = 1000;
-//$activeuser_arr = [0, 2, 3, 6, 10, 15, 20, 25, 30, 35, 40, 50];
-//foreach ($activeuser_arr as $key => $iActiveUserNum) {
-for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
-    for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
+$activeuser_arr = [50];
+foreach ($activeuser_arr as $key => $iActiveUserNum) {
+//for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
+    for ($iTeamBets = 9999; $iTeamBets <= $maximum_amount_bet; $iTeamBets=$iTeamBets+0.01) {
         $current_min = 0;
         $current_max = 0;
 //for ($iActiveUserNum = 50; $iActiveUserNum <= 50; $iActiveUserNum++) {
@@ -103,13 +103,107 @@ for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserN
                 $data->back_money150250 = 0;
                 $log['condition'] = '扶植期内　first : bet(' . $iTeamBets . ')《 10000';
 //                log_args_write($log);
-                dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '二');
+                dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '1');
                 break;
+            }
+            if ($iTeamBets >= $aFuzhi['150-250']->max_bets) {
+                //80-150 万段的数据
+                $previous_max_80150_id = $aFuzhi['150-250']->decrease_flag;
+                $previous_max_80150 = $aFuzhi[$previous_max_80150_id];
+                //70-80 万段数据
+                $previous_max_7080_id = $previous_max_80150->decrease_flag;
+                $previous_max_7080 = $aFuzhi[$previous_max_7080_id];
+                //6070 万段数据
+                $previous_max_6070_id = $previous_max_7080->decrease_flag;
+                $previous_max_6070 = $aFuzhi[$previous_max_6070_id];
+                //5060 万段数据
+                $previous_max_5060_id = $previous_max_6070->decrease_flag;
+                $previous_max_5060 = $aFuzhi[$previous_max_5060_id];
+                //40-50 万段数据
+                $previous_max_4050_id = $previous_max_5060->decrease_flag;
+                $previous_max_4050 = $aFuzhi[$previous_max_4050_id];
+                //30-40 万段数据
+                $previous_max_3040_id = $previous_max_4050->decrease_flag;
+                $previous_max_3040 = $aFuzhi[$previous_max_3040_id];
+                //20-30 万段数据
+                $previous_max_2030_id = $previous_max_3040->decrease_flag;
+                $previous_max_2030 = $aFuzhi[$previous_max_2030_id];
+                //10-20 万段数据
+                $previous_max_1020_id = $previous_max_2030->decrease_flag;
+                $previous_max_1020 = $aFuzhi[$previous_max_1020_id];
+                //5-10万段的数据
+                $previous_max_510_id = $previous_max_1020->decrease_flag;
+                $previous_max_510 = $aFuzhi[$previous_max_510_id];
+                //1-5万段的数据
+                $previous_max_15_id = $previous_max_510->decrease_flag;
+                $previous_max_15 = $aFuzhi[$previous_max_15_id];
+                //＃＃＃＃＃＃＃＃【结算】＃＃＃＃＃＃＃＃
+                //结算符合　1-5万段的数据
+                $previous_max_15_price = $previous_max_15->max_price;
+                //##############################################
+                //结算符合　5-10万段的数据
+                $previous_max_510_price = 0;
+                if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_510->active_user_num) {
+                    $previous_max_510_price = $previous_max_510->max_price - $previous_max_15_price;
+                }
+                //结算符合　10-20万段的数据
+                $previous_max_1020_price = 0;
+                if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_1020->active_user_num) {
+                    $previous_max_1020_price = $previous_max_1020->max_price - $previous_max_510->max_price;
+                }
+                //结算符合　20-30万段的数据
+                $previous_max_2030_price = 0;
+                if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_2030->active_user_num) {
+                    $previous_max_2030_price = $previous_max_2030->max_price - $previous_max_1020->max_price;
+                }
+                //结算符合　30-40万段的数据
+                $previous_max_3040_price = 0;
+                if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_3040->active_user_num) {
+                    $previous_max_3040_price = $previous_max_3040->max_price - $previous_max_2030->max_price;
+                }
+                //结算符合　40-50万段的数据
+                $previous_max_4050_price = 0;
+                if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_4050->active_user_num) {
+                    $previous_max_4050_price = $previous_max_4050->max_price - $previous_max_3040->max_price;
+                }
+                //##############################################
+                //结算符合　5060 万段的数据
+                $previous_max_5060_price = 0;
+                if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_5060->active_user_num) {
+                    $previous_max_5060_price = $previous_max_5060->max_price - $previous_max_4050->max_price;
+                }
+                //结算符合　6070 万段的数据
+                $previous_max_6070_price = 0;
+                if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_6070->active_user_num) {
+                    $previous_max_6070_price = $previous_max_6070->max_price - $previous_max_5060->max_price;
+                }
+                //结算符合　70-80 万段的数据
+                $previous_max_7080_price = 0;
+                if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_7080->active_user_num) {
+                    $previous_max_7080_price = $previous_max_7080->max_price - $previous_max_6070->max_price;
+                }
+                //结算符合　80-150 万段的数据
+                $previous_max_80150_price = 0;
+                if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $previous_max_80150->active_user_num) {
+                    $previous_max_80150_price = $previous_max_80150->max_price - $previous_max_7080->max_price;
+                }
+                //结算符合　150-250 万段的数据
+                $previous_max_150250_price = 0;
+                if ((!$oUserAgent->is_limit_active) || $oUserAgent->is_limit_active && $iActiveUserNum >= $aFuzhi['150-250']->active_user_num) {
+                    $previous_max_150250_price = $aFuzhi['150-250']->max_price - $previous_max_80150->max_price;
+                }
+                //＃＃＃＃＃＃＃＃【结算完成】＃＃＃＃＃＃＃＃
+                $data->back_money01 = 0;
+                $data->back_money15 = $previous_max_15_price;
+                $data->back_money550 = $previous_max_510_price + $previous_max_1020_price + $previous_max_2030_price + $previous_max_3040_price + $previous_max_4050_price;
+                $data->back_money50150 = $previous_max_5060_price + $previous_max_6070_price + $previous_max_7080_price + $previous_max_80150_price;
+                $data->back_money150250 = $previous_max_150250_price;
+                dd($data, $oUserAgent, $current_min, $current_max, $iActiveUserNum, $iTeamBets, '三');
+
             }
             if ($iTeamBets > $oFuZhiRule->min_bets && $iTeamBets <= $oFuZhiRule->max_bets) {
                 $current_min = $oFuZhiRule->min_bets;
                 $current_max = $oFuZhiRule->max_bets;
-                $trace_state = '二';
                 $log = [];
                 $log['condition'] = '扶植期内新 :' . $oFuZhiRule->min_bets . '<' . $iTeamBets . '<=' . $oFuZhiRule->max_bets;
                 $log['flag'] = $oFuZhiRule->flag;

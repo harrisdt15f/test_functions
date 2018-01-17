@@ -79,10 +79,10 @@ $iMaxPrize150250 = 30000;
 
 $iCount = count($aFuzhi);
 $iMinBets = 1000;
-$activeuser_arr = [0, 2, 3, 6, 10, 15, 20, 25, 30, 35, 40, 50];
+//$activeuser_arr = [0, 2, 3, 6, 10, 15, 20, 25, 30, 35, 40, 50];
 //$activeuser_arr = [0, 2, 3];
-foreach ($activeuser_arr as $key => $iActiveUserNum) {
-//for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
+//foreach ($activeuser_arr as $key => $iActiveUserNum) {
+for ($iActiveUserNum = 0; $iActiveUserNum <= $maximum_active_user; $iActiveUserNum++) {
     for ($iTeamBets = 0; $iTeamBets <= $maximum_amount_bet; $iTeamBets++) {
         $current_min = 0;
         $current_max = 0;
